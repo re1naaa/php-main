@@ -9,7 +9,7 @@ $sql = "SELECT * FROM products";
 $selectUsers=$conn->prepare($sql);
 $selectUsers->execute();
 
-$users_data = $selectUsers->fetchAll();
+$selectProducts = $selectProducts->fetchAll();
 
 ?>
 
@@ -58,14 +58,14 @@ $users_data = $selectUsers->fetchAll();
           <li class="nav-item">
             <a class="nav-link active" href="dashboard.php">
               <span data-feather="home"></span>
-              Dashboard <span class="sr-only">(current)</span>
+              Products Dashboard <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-          <?php foreach ($users_data as $user_data) { ?>
+          <?php foreach ($products_data as $products_data) { ?>
 
 
-            <a class="nav-link" href="profile.php?id=<?= $user_data['id'];?>">
+            <a class="nav-link" href="profile.php?id=<?= $products_data['id'];?>">
             <?php  } ?>
               <span data-feather="file"></span>
               Edit Profile
@@ -78,7 +78,7 @@ $users_data = $selectUsers->fetchAll();
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+        <h1 class="h2">Products</h1>
       </div>  
 <div>
 	 <?php 
@@ -87,13 +87,13 @@ $users_data = $selectUsers->fetchAll();
         include_once('config.php');
 
 
-        $getUsers = $conn->prepare("SELECT * FROM products");
+        $getProducts = $conn->prepare("SELECT * FROM products");
 
 
-        $getUsers->execute();
+        $getProducts->execute();
 
 
-        $users = $getUsers->fetchAll();
+        $getProducts = $getProducts->fetchAll();
 
 
         ?>
@@ -111,15 +111,15 @@ $users_data = $selectUsers->fetchAll();
             </tr>
           </thead>
           <?php
-            foreach ($users as $user ) {
+            foreach ($products as $products ) {
           ?> <tbody>
             <tr> 
-              <td> <?= $user['id'] ?> </td>
-              <td> <?= $user['username'] ?> </td>
-              <td> <?= $user['name']  ?> </td> 
-              <td> <?= $user['surname']  ?> </td> 
-              <td> <?= $user['email']  ?> </td>
-              <td> <?= "<a href='delete.php?id=$user[id]'> Delete</a>| <a href='profile.php?id=$user[id]'> Update </a>"?></td>
+              <td> <?= $products['id'] ?> </td>
+              <td> <?= $products['title'] ?> </td>
+              <td> <?= $products['description']  ?> </td> 
+              <td> <?= $products['quantity']  ?> </td> 
+              <td> <?= $products['price']  ?> </td>
+              <td> <?= "<a href='delete.php?id=$products[id]'> Delete</a>| <a href='profile.php?id=$products[id]'> Update </a>"?></td>
             </tr>
           
             <?php 

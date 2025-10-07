@@ -11,7 +11,7 @@ if(isset($_POST['submit']))
 
     $password = $temPass;
     
-    if(empty($name))  || empty($surname) || empty($username) || empty($email) || empty($temPass)
+    if(empty($name) || empty($surname) || empty($username) || empty($email) || empty($temPass))
     {
         echo "You nedd to fill all the fields.";
     }else
@@ -19,7 +19,7 @@ if(isset($_POST['submit']))
         $sql = "SELECT username FROM users WHERE username=:username";
         $tempSQL = $conn->prepare($sql);
         $tempSQL->bindParam(':username', $username);
-        $tempSQL->exetucte();
+        $tempSQL->execute();
 
         if($tempSQL->rowCount() > 0)
         {
@@ -39,7 +39,7 @@ if(isset($_POST['submit']))
             $insertSql->execute();
 
             echo"Data saved successfully ...";
-            header("refresh:2; url=login.php")
+            header("refresh:2; url=login.php");
         }
     }
 }
