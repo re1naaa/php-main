@@ -97,7 +97,7 @@ $users_data = $selectUsers->fetchAll();
 
 
         ?>
-
+          <a href="addProduct.php" id="product">Add Product
 
         <table>
           <thead>

@@ -12,18 +12,25 @@ if(isset($_POST['update']))
 	$quantity = $_POST['quantity'];
 	$price = $_POST['price'];
 
-	$sql = "UPDATE products SET username=:username, name=:name, surname=:surname, email=:email WHERE id=:id";
-	$prep = $conn->prepare($sql);
-	$prep->bindParam(':id', $id);
-	$prep->bindParam(':username', $title);
-	$prep->bindParam(':name', $description);
-	$prep->bindParam(':surname', $quantity);
-	$prep->bindParam(':email', $price);
+if(empty($title) || empty($description) ||empty($quantity) ||empty($price) || )
+{
+	echo "You need to fill all the fields";
+	header( "refresh:2; url=product.php" );
+}else{
+	$sql = "UPDATE products SET name=:name, surname=:surname, username=:username, email=:email, password=:password  WHERE id=:id";
+	$updateSql = $conn->prepare($sql);
 
-	$prep->execute();
+	$updateSql->bindParam(':id', $id);
+	$updateSql->bindParam(':title', $title);
+	$updateSql->bindParam(':description', $description);
+	$updateSql->bindParam(':quantity', $quantity);
+	$updateSql->bindParam(':price', $price);
 
-	header("Location:dashboard.php");
+	$updateSql->execute();
+
+	header("Location:productDashboard.php");
 }
-include_once('footer.php');
+}
+
 ?>
 

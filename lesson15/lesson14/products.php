@@ -1,8 +1,8 @@
 <?php
-session_start();
 include_once('config.php');
 
 if(isset($_POST['submit']))
+{
 $title = $_POST['title'];
 $description = $_POST['description'];
 $quanity = $_POST['quantity'];
@@ -27,17 +27,18 @@ $price = $_POST['price'];
             $sql = "insert into products (title, description, quantity, price)values(:title, :description, :quantity, :price)";
             $insertSql = $conn->prepare($sql);
 
-            $insertSql->bindParam(':name', $name);
-            $insertSql->bindParam(':surname', $surname);
-            $insertSql->bindParam(':username', $username);
-            $insertSql->bindParam(':email', $email);
-            $insertSql->bindParam(':name', $password);
+            $insertSql->bindParam(':title', $title);
+            $insertSql->bindParam(':description', $description);
+            $insertSql->bindParam(':quantity', $quanity);
+            $newprice=$price*100;
+            $insertSql->bindParam(':price', $newprice);
 
             $insertSql->execute();
 
             echo"Data saved successfully ...";
-            header("refresh:2; url=login.php");
+            header("refresh:2; url=productDashboard.php");
         }
+}
 }
 ?>
 <?php include("footer.php"); ?>
