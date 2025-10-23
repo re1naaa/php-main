@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($users[$username]) && password_verify($password, $users[$username])) {
             $_SESSION['user'] = $username;
             header("Location: welcome.php");
-            exit();
+            exit(); 
         } else {
             $error = "Invalid username or password!";
         }
@@ -28,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coca-Cola Login</title>
   <link rel="stylesheet" href="style.css">
-  <link href="singup.php">
 </head>
 <body>
 
