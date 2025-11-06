@@ -1,51 +1,56 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 if (!isset($_SESSION['user'])) {
     header("Location: index.php");
     exit();
 }
 
+$user = $_SESSION['user'];
 $flavorsFile = 'flavors.json';
 
-// Load existing flavors
+// Ngarko shijet ekzistuese
 $flavors = [];
 if (file_exists($flavorsFile)) {
-    $flavors = json_decode(file_get_contents($flavorsFile), true);
+    $data = file_get_contents($flavorsFile);
+    $flavors = json_decode($data, true);
+    if (!is_array($flavors)) $flavors = [];
 }
 
-// Handle CRUD actions
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Vetëm "reinabeadini" mund të bëjë ndryshime
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user === 'reinabeadini') {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'add':
                 $new = [
                     'id' => uniqid(),
-                    'name' => $_POST['name'],
-                    'desc' => $_POST['desc'],
-                    'img' => $_POST['img']
+                    'name' => trim($_POST['name']),
+                    'desc' => trim($_POST['desc']),
+                    'img' => trim($_POST['img'])
                 ];
                 $flavors[] = $new;
-                file_put_contents($flavorsFile, json_encode($flavors, JSON_PRETTY_PRINT));
                 break;
 
             case 'delete':
                 $id = $_POST['id'];
-                $flavors = array_filter($flavors, fn($f) => $f['id'] !== $id);
-                file_put_contents($flavorsFile, json_encode(array_values($flavors), JSON_PRETTY_PRINT));
+                $flavors = array_values(array_filter($flavors, fn($f) => $f['id'] !== $id));
                 break;
 
             case 'edit':
                 $id = $_POST['id'];
                 foreach ($flavors as &$f) {
                     if ($f['id'] === $id) {
-                        $f['name'] = $_POST['name'];
-                        $f['desc'] = $_POST['desc'];
-                        $f['img'] = $_POST['img'];
+                        $f['name'] = trim($_POST['name']);
+                        $f['desc'] = trim($_POST['desc']);
+                        $f['img'] = trim($_POST['img']);
                     }
                 }
-                file_put_contents($flavorsFile, json_encode($flavors, JSON_PRETTY_PRINT));
+                unset($f);
                 break;
         }
+        file_put_contents($flavorsFile, json_encode($flavors, JSON_PRETTY_PRINT));
     }
     header("Location: welcome.php");
     exit();
@@ -57,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8">
   <title>Coca-Cola Flavors Manager</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -135,7 +139,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
       transition: 0.3s;
-      position: relative;
     }
 
     .flavor-card:hover {
@@ -151,10 +154,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     .flavor-info {
       padding: 15px;
-    }
-
-    .flavor-info h3 {
-      margin: 5px 0;
     }
 
     .crud-btns {
@@ -206,6 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       transform: translateY(-3px);
     }
 
+
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
@@ -221,11 +221,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <header>
   <img src="logo.png" alt="Coca-Cola Logo">
-  <h1>Welcome, <?= htmlspecialchars($_SESSION['user']) ?>!</h1>
-  <p>Manage your Coca-Cola flavor collection 🍹</p>
+  <h1>Welcome, <?= htmlspecialchars($user) ?>!</h1>
+  <p>Explore our Coca-Cola flavor collection 🍹</p>
 </header>
 
-<!-- ADD FORM -->
+<!-- Vetëm reinabeadini mund të shtojë -->
+<?php if ($user === 'reinabeadini'): ?>
 <div class="add-form">
   <form method="POST">
     <input type="hidden" name="action" value="add">
@@ -235,8 +236,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit" class="add-btn">➕ Add Flavor</button>
   </form>
 </div>
+<?php endif; ?>
 
-<!-- DISPLAY FLAVORS -->
 <section class="flavors-container">
   <?php if (!empty($flavors)): ?>
     <?php foreach ($flavors as $f): ?>
@@ -246,8 +247,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <h3><?= htmlspecialchars($f['name']) ?></h3>
           <p><?= htmlspecialchars($f['desc']) ?></p>
         </div>
+
+        <?php if ($user === 'reinabeadini'): ?>
         <div class="crud-btns">
-          <!-- Edit form -->
           <form method="POST">
             <input type="hidden" name="action" value="edit">
             <input type="hidden" name="id" value="<?= $f['id'] ?>">
@@ -256,13 +258,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" name="img" value="<?= htmlspecialchars($f['img']) ?>" required>
             <button type="submit">✏️ Edit</button>
           </form>
-          <!-- Delete form -->
+
           <form method="POST">
             <input type="hidden" name="action" value="delete">
             <input type="hidden" name="id" value="<?= $f['id'] ?>">
             <button type="submit">🗑️ Delete</button>
           </form>
         </div>
+        <?php endif; ?>
       </div>
     <?php endforeach; ?>
   <?php else: ?>
@@ -276,4 +279,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
-
