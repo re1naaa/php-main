@@ -12,12 +12,6 @@
         "img": "colacherry.png"
     },
     {
-        "id": "690cc895beb4e",
-        "name": "reina",
-        "desc": "reina",
-        "img": "colaclassic.png"
-    },
-    {
         "id": "690d0084276db",
         "name": "cola vanilla",
         "desc": "vanillaaaaaaaaaaaaa",
@@ -26,7 +20,19 @@
     {
         "id": "690d053f1ee8a",
         "name": "zero",
-        "desc": "0",
+        "desc": "zero",
         "img": "colazero.png"
+    },
+    {
+        "id": "690df1b66cdc4",
+        "name": "cola coffe",
+        "desc": "a perfect combo",
+        "img": "colacoffe.png"
+    },
+    {
+        "id": "690df1fbbf88e",
+        "name": "classic",
+        "desc": "the real one",
+        "img": "colaclassic.png"
     }
 ]
