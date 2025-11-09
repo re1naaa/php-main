@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 
 session_start();
 if (!isset($_SESSION['user'])) {
-    header("Location: index.php");
+    header("Location: login.php");
     exit();
 }
 
@@ -174,7 +174,7 @@ h1 {
   color: white;
 }
 
-/* Flavors grid - 3 per row fixed */
+/* Flavors grid */
 .flavors-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -221,7 +221,7 @@ h1 {
   font-size: 0.95rem;
 }
 
-/* CRUD inputs transparent */
+/* CRUD */
 .crud-btns {
   display: flex;
   flex-direction: column;
@@ -244,11 +244,6 @@ h1 {
   outline: none;
   background: rgba(255,255,255,0.15);
   color: white;
-  transition: 0.3s;
-}
-.crud-btns input:focus {
-  background: rgba(255,255,255,0.25);
-  box-shadow: 0 0 12px rgba(255,0,0,0.6);
 }
 .crud-btns button {
   background: linear-gradient(45deg, #ff0000, #ff5c5c);
@@ -288,14 +283,76 @@ h1 {
   transform: translateY(-3px);
 }
 
-/* Animations */
+/* Explore more button */
+.explore-btn {
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  width: fit-content;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.explore-btn:hover {
+  background: #ff0000;
+  box-shadow: 0 0 15px #ff3c3c;
+  transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  background: rgba(0,0,0,0.5);
+  padding: 30px 10px;
+  color: #ddd;
+  font-size: 14px;
+}
+footer a {
+  color: #ff4d4d;
+  text-decoration: none;
+  font-weight: bold;
+}
+footer .socials {
+  margin-top: 10px;
+}
+footer .socials a {
+  margin: 0 8px;
+  color: white;
+  font-size: 20px;
+  transition: 0.3s;
+}
+footer .socials a:hover {
+  color: #ff0000;
+}
+
+/* Scroll to top */
+.scroll-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: rgba(255,0,0,0.8);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 22px;
+  cursor: pointer;
+  display: none;
+  transition: 0.3s;
+}
+.scroll-top:hover {
+  background: red;
+  transform: scale(1.1);
+}
+
 @keyframes float {
   0%,100% {transform: translateY(0);}
   50% {transform: translateY(-10px);}
-}
-@keyframes fadeIn {
-  from {opacity:0; transform: translateY(20px);}
-  to {opacity:1; transform: translateY(0);}
 }
 </style>
 </head>
@@ -366,9 +423,22 @@ h1 {
   <?php endif; ?>
 </section>
 
+<a href="https://www.coca-cola.com/" target="_blank" class="explore-btn">🌍 Explore More</a>
+
 <div class="logout-container">
   <a href="logout.php" class="logout-btn">🚪 Log Out</a>
 </div>
+
+<footer>
+  <p>© <?= date("Y") ?> Coca-Cola Company. All Rights Reserved.</p>
+  <div class="socials">
+    <a href="https://www.facebook.com/cocacola" target="_blank">🌐</a>
+    <a href="https://www.instagram.com/cocacola" target="_blank">📸</a>
+    <a href="https://twitter.com/CocaCola" target="_blank">🐦</a>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn">⬆</button>
 
 <script>
 // Search live
@@ -378,6 +448,15 @@ document.getElementById('searchInput').addEventListener('keyup', ()=>{
     const name=card.dataset.name;
     card.style.display=name.includes(term)?'block':'none';
   });
+});
+
+// Scroll to top
+const scrollBtn=document.getElementById('scrollTopBtn');
+window.addEventListener('scroll',()=>{
+  scrollBtn.style.display=(window.scrollY>200)?'block':'none';
+});
+scrollBtn.addEventListener('click',()=>{
+  window.scrollTo({top:0,behavior:'smooth'});
 });
 </script>
 

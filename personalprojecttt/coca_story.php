@@ -40,14 +40,8 @@ header img {
   width: 130px;
   animation: float 3s ease-in-out infinite;
 }
-h1 {
-  font-size: 2.2rem;
-  margin-top: 10px;
-}
-p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-}
+h1 { font-size: 2.2rem; margin-top: 10px; }
+p { font-size: 1.1rem; line-height: 1.6; }
 
 /* Story section */
 .story {
@@ -59,16 +53,8 @@ p {
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   animation: fadeIn 1s ease-out;
 }
-.story h2 {
-  text-align: center;
-  font-size: 1.8rem;
-  color: #ffdddd;
-}
-.story p {
-  text-align: justify;
-  font-size: 1rem;
-  color: #fff;
-}
+.story h2 { text-align: center; font-size: 1.8rem; color: #ffdddd; }
+.story p { text-align: justify; font-size: 1rem; color: #fff; }
 
 /* Timeline */
 .timeline {
@@ -85,19 +71,9 @@ p {
   top: 0; bottom: 0; left: 50%;
   transform: translateX(-50%);
 }
-.entry {
-  position: relative;
-  width: 50%;
-  padding: 20px;
-  box-sizing: border-box;
-}
-.entry.left {
-  left: 0;
-  text-align: right;
-}
-.entry.right {
-  left: 50%;
-}
+.entry { position: relative; width: 50%; padding: 20px; box-sizing: border-box; transition: 0.3s; }
+.entry.left { left: 0; text-align: right; }
+.entry.right { left: 50%; }
 .entry-content {
   background: rgba(255,255,255,0.15);
   padding: 15px;
@@ -105,25 +81,18 @@ p {
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   transition: 0.3s;
 }
-.entry-content:hover {
-  background: rgba(255,255,255,0.25);
-  transform: scale(1.05);
-}
+.entry-content:hover { background: rgba(255,255,255,0.25); transform: scale(1.05); }
 .entry::after {
   content: "";
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 20px; height: 20px;
   background: #ff0000;
   border-radius: 50%;
   top: 25px;
   right: -10px;
   transform: translateX(50%);
 }
-.entry.right::after {
-  left: -10px;
-  right: auto;
-}
+.entry.right::after { left: -10px; right: auto; }
 
 /* Back button */
 .back-btn {
@@ -142,26 +111,66 @@ p {
 }
 .back-btn:hover {
   background: linear-gradient(45deg, #cc0000, #ff1a1a);
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.02);
 }
 
+/* Footer */
+footer {
+  text-align: center;
+  background: rgba(0,0,0,0.5);
+  padding: 30px 10px;
+  color: #ddd;
+  font-size: 14px;
+}
+footer a { color: #ff4d4d; text-decoration: none; font-weight: bold; }
+footer .socials { margin-top: 10px; }
+footer .socials a { margin: 0 8px; color: white; font-size: 20px; transition: 0.3s; }
+footer .socials a:hover { color: #ff0000; }
+
+/* Explore button */
+.explore-btn {
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  width: fit-content;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.explore-btn:hover {
+  background: #ff0000;
+  box-shadow: 0 0 15px #ff3c3c;
+  transform: scale(1.05);
+}
+
+/* Scroll to top */
+.scroll-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: rgba(255,0,0,0.8);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 45px; height: 45px;
+  font-size: 22px;
+  cursor: pointer;
+  display: none;
+  transition: 0.3s;
+}
+.scroll-top:hover { background: red; transform: scale(1.1); }
+
 /* Animations */
-@keyframes float {
-  0%,100% {transform: translateY(0);}
-  50% {transform: translateY(-10px);}
-}
-@keyframes fadeIn {
-  from {opacity:0; transform: translateY(20px);}
-  to {opacity:1; transform: translateY(0);}
-}
+@keyframes float { 0%,100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
+@keyframes fadeIn { from {opacity:0; transform: translateY(20px);} to {opacity:1; transform: translateY(0);} }
 
 /* Responsive */
 @media (max-width: 700px) {
-  .entry, .entry.right, .entry.left {
-    left: 0;
-    width: 100%;
-    text-align: center;
-  }
+  .entry, .entry.right, .entry.left { left: 0; width: 100%; text-align: center; }
   .timeline::before { left: 10px; }
   .entry::after, .entry.right::after { left: 0; }
 }
@@ -169,7 +178,6 @@ p {
 </head>
 <body>
 
-<!-- Background video -->
 <video autoplay muted loop class="video-bg">
   <source src="5561389-uhd_3840_2160_25fps.mp4" type="video/mp4">
 </video>
@@ -182,14 +190,8 @@ p {
 
 <section class="story">
   <h2>From Pharmacy to Global Icon 🥤</h2>
-  <p>
-    Coca-Cola was created in 1886 by Dr. John Stith Pemberton in Atlanta, Georgia. Originally intended as a medicinal tonic, 
-    the first Coca-Cola was sold at Jacobs' Pharmacy for just five cents a glass.
-  </p>
-  <p>
-    What started as a small local beverage soon became a symbol of refreshment recognized across the world. 
-    The unmistakable red logo, the curvy bottle, and the effervescent bubbles all came together to create a timeless brand.
-  </p>
+  <p>Coca-Cola was created in 1886 by Dr. John Stith Pemberton in Atlanta, Georgia...</p>
+  <p>What started as a small local beverage soon became a symbol of refreshment recognized across the world...</p>
 </section>
 
 <section class="timeline">
@@ -226,6 +228,25 @@ p {
 </section>
 
 <a href="welcome.php" class="back-btn">⬅ Back to Dashboard</a>
+<a href="https://www.coca-cola.com/" target="_blank" class="explore-btn">🌍 Explore More</a>
+
+<footer>
+  <p>© <?= date("Y") ?> Coca-Cola Company. All Rights Reserved.</p>
+  <div class="socials">
+    <a href="https://www.facebook.com/cocacola" target="_blank">🌐</a>
+    <a href="https://www.instagram.com/cocacola" target="_blank">📸</a>
+    <a href="https://twitter.com/CocaCola" target="_blank">🐦</a>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTopBtn">⬆</button>
+
+<script>
+// Scroll to top
+const scrollBtn=document.getElementById('scrollTopBtn');
+window.addEventListener('scroll',()=>{scrollBtn.style.display=(window.scrollY>200)?'block':'none';});
+scrollBtn.addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'});});
+</script>
 
 </body>
 </html>
